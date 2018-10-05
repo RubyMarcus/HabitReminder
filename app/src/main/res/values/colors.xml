@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3D3F43</color>
     <color name="colorPrimaryDark">#262C32</color>
     <color name="colorAccent">#AEADAD</color>
-    <color name="checkBoxOrange">#FF5722</color>
+    <color name="checkBoxOrange">#ff5722</color>
     <color name="checkBoxGreen">#27A718</color>
+    <color name="dividerColor">#E5E1E1</color>
 </resources>
