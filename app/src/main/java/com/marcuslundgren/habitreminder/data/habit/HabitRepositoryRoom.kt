@@ -2,7 +2,7 @@ package com.marcuslundgren.habitreminder.data.habit
 
 import android.arch.lifecycle.LiveData
 
-class MovieRepositoryRoom(val habitDao: HabitDao) : HabitRepository {
+class HabitRepositoryRoom(val habitDao: HabitDao) : HabitRepository {
 
     override fun create(vararg habit: Habit) = habitDao.insert(*habit)
 

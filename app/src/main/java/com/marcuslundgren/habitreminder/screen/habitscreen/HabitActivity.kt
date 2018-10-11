@@ -7,8 +7,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.widget.TextView
+import android.widget.Toast
 import com.marcuslundgren.habitreminder.R
 import com.marcuslundgren.habitreminder.data.AppDatabase
 import com.marcuslundgren.habitreminder.data.habit.Habit
@@ -16,6 +20,7 @@ import com.marcuslundgren.habitreminder.databinding.HabitActivityBinding
 import com.marcuslundgren.habitreminder.utils.IO
 import com.marcuslundgren.habitreminder.utils.UI
 import kotlinx.android.synthetic.main.habit_activity.*
+import java.util.*
 
 class HabitActivity : AppCompatActivity() {
 
@@ -36,7 +41,7 @@ class HabitActivity : AppCompatActivity() {
             }
         })
 
-        //databinding
+        //Databinding
         val binding: HabitActivityBinding = DataBindingUtil.setContentView(this, R.layout.habit_activity)
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
@@ -46,26 +51,11 @@ class HabitActivity : AppCompatActivity() {
 //        val layoutManager = LinearLayoutManager(this)
 //        layoutManager.orientation = LinearLayoutManager.VERTICAL
 
+
         // Set the adaptor
         val adapter = HabitAdapter(viewModel)
         recycler_view_habit.layoutManager = LinearLayoutManager(this)
         recycler_view_habit.adapter = adapter
-
-        /*
-        var checkBoxState = true
-
-        checkBox.setOnClickListener {
-            if(checkBoxState) {
-                CompoundButtonCompat.setButtonTintList(checkBox, ColorStateList.valueOf(resources.getColor(R.color.checkBoxGreen)))
-                checkBoxState = false
-                return@setOnClickListener
-            } else {
-                CompoundButtonCompat.setButtonTintList(checkBox, ColorStateList.valueOf(resources.getColor(R.color.checkBoxOrange)))
-                checkBoxState = true
-                return@setOnClickListener
-            }
-        }
-        */
     }
 
     private fun showAddDialog() {
@@ -79,11 +69,17 @@ class HabitActivity : AppCompatActivity() {
         val time = view.findViewById(R.id.time_dialog_textview) as TextView
 
         builder.setPositiveButton(android.R.string.ok) {dialog, p ->
-            viewModel.addHabit(Habit(name.text.toString(), time.text.toString(), "0"))
+            if(name.text.toString() == "" || time.text.toString() == "") {
+                Toast.makeText(applicationContext, "Fields can't be empty!", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            } else {
+                viewModel.addHabit(Habit(name.text.toString(), time.text.toString(), "0", false, ""))
+            }
         }
 
         builder.show()
     }
 
-
+    
 }
+

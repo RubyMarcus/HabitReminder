@@ -16,12 +16,8 @@ class HabitAdapter(val viewModel :HabitViewModel) : RecyclerView.Adapter<HabitVi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder = HabitViewHolder.newInstance(parent, viewModel)
 
-    override fun getItemCount(): Int {
-        println("itemcount" + habits.size)
-        return habits.size
-    }
+    override fun getItemCount(): Int = habits.size
 
     override fun onBindViewHolder(holder : HabitViewHolder, position : Int) = holder.bind(habits[position])
-
 
 }
